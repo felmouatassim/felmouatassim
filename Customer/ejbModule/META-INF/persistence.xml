@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	
+	<!--  here we define three types ways of connecting to Oracle database,
+	you can choose the one that suits you. -->
+	
+	<!-- This pesistence unit uses the application server default persistence provider, 
+	and access the database directly through a datasource-->
+	
+	<persistence-unit name="OracleDB">
+		<jta-data-source>jdbc/OracleDS</jta-data-source>
+	</persistence-unit>
+	
+	<!-- This pesistence unit uses EclipseLink persistence provider, 
+	and access the database directly through a datasource-->
+	
+	<!-- <persistence-unit name="OracleDB">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>jdbc/OracleDS</jta-data-source>
+		<class>ma.farouk.entity.Customer</class>
+	</persistence-unit>
+	 -->
+	<!-- This pesistence unit uses EclipseLink persistence provider, and access the database directly through jdbc,
+	without using Datasources. The transaction-type should be "RESOURCE_LOCAL"-->
+	
+<!-- 	<persistence-unit name="OracleDB" transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>ma.farouk.entity.Customer</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+			<property name="javax.persistence.jdbc.user" value="felmouatassim" />
+			<property name="javax.persistence.jdbc.password" value="Oracle11" />
+
+		</properties>
+
+	</persistence-unit> -->
+</persistence>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="ejbModule"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="F:/Middleware/wlserver_10.3/server/lib/weblogic.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink.jar"/>
+	<classpathentry kind="lib" path="lib/javax.persistence_2.1.0.v201304241213.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
