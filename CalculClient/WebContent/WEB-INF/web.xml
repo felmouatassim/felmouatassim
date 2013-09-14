@@ -13,7 +13,7 @@
     <description></description>
     <display-name>CalculClientServletLocal</display-name>
     <servlet-name>CalculClientServletLocal</servlet-name>
-    <servlet-class>ma.atos.calcul.client.CalculClientServletLocal</servlet-class>
+    <servlet-class>ma.farouk.calcul.client.CalculClientServletLocal</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CalculClientServletLocal</servlet-name>
@@ -23,10 +23,11 @@
     <description></description>
     <display-name>CalculClientServletRemote</display-name>
     <servlet-name>CalculClientServletRemote</servlet-name>
-    <servlet-class>ma.atos.calcul.client.CalculClientServletRemote</servlet-class>
+    <servlet-class>ma.farouk.calcul.client.CalculClientServletRemote</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CalculClientServletRemote</servlet-name>
     <url-pattern>/CalculRemote</url-pattern>
   </servlet-mapping>
+
 </web-app>

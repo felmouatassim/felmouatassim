@@ -1,4 +1,4 @@
-package ma.atos.calcul.client;
+package ma.farouk.calcul.client;
 
 import java.util.Properties;
 
