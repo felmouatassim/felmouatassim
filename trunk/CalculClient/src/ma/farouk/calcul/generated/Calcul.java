@@ -1,5 +1,5 @@
 
-package ma.atos.calcul.generated;
+package ma.farouk.calcul.generated;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

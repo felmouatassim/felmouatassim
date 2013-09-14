@@ -1,5 +1,5 @@
 
-package ma.atos.calcul.generated;
+package ma.farouk.calcul.generated;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,13 +23,13 @@ public class CalculService
 {
 
     private final static URL CALCULSERVICE_WSDL_LOCATION;
-    private final static Logger logger = Logger.getLogger(ma.atos.calcul.generated.CalculService.class.getName());
+    private final static Logger logger = Logger.getLogger(ma.farouk.calcul.generated.CalculService.class.getName());
 
     static {
         URL url = null;
         try {
             URL baseUrl;
-            baseUrl = ma.atos.calcul.generated.CalculService.class.getResource(".");
+            baseUrl = ma.farouk.calcul.generated.CalculService.class.getResource(".");
             url = new URL(baseUrl, "http://localhost:8001/Calcul/CalculService?WSDL");
         } catch (MalformedURLException e) {
             logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:8001/Calcul/CalculService?WSDL', retrying as a local file");

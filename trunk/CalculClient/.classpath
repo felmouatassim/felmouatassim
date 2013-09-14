@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="F:/Middleware/wlserver_10.3/server/lib/weblogic.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CalculEJB"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

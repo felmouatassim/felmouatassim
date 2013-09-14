@@ -1,12 +1,12 @@
-package ma.atos.calcul.client;
+package ma.farouk.calcul.client;
 
 import javax.xml.ws.WebServiceRef;
 
-import ma.atos.calcul.generated.Ajout;
-import ma.atos.calcul.generated.AjoutResponse;
-import ma.atos.calcul.generated.Calcul;
-import ma.atos.calcul.generated.CalculService;
-import ma.atos.calcul.generated.ProductResponse;
+import ma.farouk.calcul.generated.Ajout;
+import ma.farouk.calcul.generated.AjoutResponse;
+import ma.farouk.calcul.generated.Calcul;
+import ma.farouk.calcul.generated.CalculService;
+import ma.farouk.calcul.generated.ProductResponse;
 
 public class CalculClient {
 

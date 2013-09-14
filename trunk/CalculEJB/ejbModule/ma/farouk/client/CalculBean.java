@@ -1,4 +1,4 @@
-package ma.atos.client;
+package ma.farouk.client;
 
 import javax.ejb.Stateless;
 

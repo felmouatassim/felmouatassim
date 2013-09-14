@@ -1,4 +1,4 @@
-package ma.atos.calcul.client;
+package ma.farouk.calcul.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ma.atos.client.CalculLocal;
+import ma.farouk.client.CalculLocal;
 
 /**
  * Servlet implementation class CalculClientServlet
