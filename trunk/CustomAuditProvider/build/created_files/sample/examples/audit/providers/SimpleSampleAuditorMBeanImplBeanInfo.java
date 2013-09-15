@@ -37,7 +37,7 @@ import weblogic.management.commo.RequiredModelMBeanWrapper;
 import sample.examples.audit.providers.SimpleSampleAuditorMBean;
 
 /**
- * Generated on Sun Sep 15 19:33:37 WAT 2013
+ * Generated on Sun Sep 15 21:35:49 WAT 2013
  * @copyright Copyright (c) 2003 by BEA Systems Inc.  All Rights Reserved.
  * @author Copyright (c) 2003 by BEA Systems Inc. All Rights Reserved.
  * @version 0.1
