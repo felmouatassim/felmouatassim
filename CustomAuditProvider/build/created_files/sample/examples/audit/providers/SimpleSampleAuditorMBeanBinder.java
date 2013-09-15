@@ -12,7 +12,7 @@ import weblogic.utils.codegen.AttributeBinder;
 import weblogic.descriptor.internal.AbstractDescriptorBean;
 
 /**
- * Generated on Sun Sep 15 19:33:36 WAT 2013
+ * Generated on Sun Sep 15 21:35:48 WAT 2013
  * @copyright Copyright (c) 2003 by BEA Systems Inc.  All Rights Reserved.
  * @author Copyright (c) 2003 by BEA Systems Inc. All Rights Reserved.
  * @version 0.1

@@ -4,6 +4,7 @@ package sample.examples.audit.providers;
 import javax.management.MBeanException;
 
 import weblogic.management.commo.CommoMBeanInstance;
+import weblogic.management.commo.RequiredModelMBeanWrapper;
 import weblogic.management.security.audit.ContextHandlerImpl;
 
 
@@ -20,7 +21,11 @@ public  class SimpleSampleAuditorImpl extends ContextHandlerImpl
         throws MBeanException
    { super(base); }
 
-
+   public SimpleSampleAuditorImpl(RequiredModelMBeanWrapper base) throws MBeanException
+   {
+   super(base);
+   }
+ 
 
 
    //****************************************************************************************************

@@ -48,7 +48,7 @@ public class SIMPLESAMPLEAUDITORBeanInfoFactory implements RoleInfoImplementatio
   }
 
   public String getRoleInfoImplementationFactoryTimestamp() {
-    return "1379270011240";
+    return "1379277343539";
   }
 
 
