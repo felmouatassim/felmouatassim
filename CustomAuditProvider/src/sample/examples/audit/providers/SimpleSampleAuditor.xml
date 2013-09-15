@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<MBeanType Name="SimpleSampleAuditor" DisplayName="SimpleSampleAuditor"
+	Package="sample.examples.audit.providers" Extends="weblogic.management.security.audit.Auditor"
+	Implements="weblogic.management.security.audit.ContextHandler"
+	PersistPolicy="OnUpdate">
+
+	<MBeanAttribute
+		Name        = "ProviderClassName"
+		Type        = "java.lang.String"
+		Writeable   = "false"
+		Default     = "&quot;sample.examples.audit.providers.SimpleSampleAuditProviderImpl&quot;"
+	/>
+
+	<MBeanAttribute
+		Name        = "Description"
+		Type        = "java.lang.String"
+		Writeable   = "false"
+		Default     = "&quot;WebLogic Simple Sample Audit Provider&quot;"
+	/>
+
+	<MBeanAttribute
+		Name        = "Version"
+		Type        = "java.lang.String"
+		Writeable   = "false"
+		Default     = "&quot;1.0&quot;"
+	/>
+
+	<MBeanAttribute
+		Name          = "SupportedContextHandlerEntries"
+		Type          = "java.lang.String[]"
+		Writeable     = "false"
+		Default       = "new String[] {&quot;com.bea.contextelement.channel.Address&quot;,
+								   	&quot;com.bea.contextelement.channel.ChannelName&quot;,
+								   	&quot;com.bea.contextelement.channel.Port&quot;,
+									&quot;com.bea.contextelement.channel.Protocol&quot;,
+									&quot;com.bea.contextelement.channel.PublicAddress&quot;,
+									&quot;com.bea.contextelement.channel.PublicPort&quot;,
+									&quot;com.bea.contextelement.channel.RemoteAddress&quot;,
+									&quot;com.bea.contextelement.channel.RemotePort&quot;,
+									&quot;com.bea.contextelement.channel.Secure&quot;,
+									&quot;com.bea.contextelement.ejb20.Parameter&quot;,
+									&quot;com.bea.contextelement.entitlement.EAuxiliaryID&quot;,
+									&quot;com.bea.contextelement.jmx.AuditProtectedArgInfo&quot;,
+									&quot;com.bea.contextelement.jmx.ObjectName&quot;,
+									&quot;com.bea.contextelement.jmx.OldAttributeValue&quot;,
+									&quot;com.bea.contextelement.jmx.Parameters&quot;,
+									&quot;com.bea.contextelement.jmx.ShortName&quot;,
+									&quot;com.bea.contextelement.jmx.Signature&quot;,
+									&quot;com.bea.contextelement.saml.MessageSignerCertificate&quot;,
+									&quot;com.bea.contextelement.saml.SSLClientCertificateChain&quot;,
+									&quot;com.bea.contextelement.saml.subject.ConfirmationMethod&quot;,
+									&quot;com.bea.contextelement.saml.subject.dom.KeyInfo&quot;,
+									&quot;com.bea.contextelement.security.ChainPrevailidatedBySSL&quot;,
+									&quot;com.bea.contextelement.servlet.HttpServletRequest&quot;,
+									&quot;com.bea.contextelement.servlet.HttpServletResponse&quot;,
+									&quot;com.bea.contextelement.webservice.Integrity&quot;,
+									&quot;com.bea.contextelement.wli.Message&quot;,
+									&quot;com.bea.contextelement.wsee.SOAPMessage&quot;,
+									&quot;com.bea.contextelement.xml.SecurityToken&quot;,
+									&quot;com.bea.contextelement.xml.SecurityTokenAssertion&quot;}"
+	Description   = "List of all ContextHandler entries supported by the auditor."
+	/>
+
+	<MBeanAttribute
+		Name        = "LogFileName"
+		Type        = "java.lang.String"
+		Default     = "&quot;SimpleSampleAuditor.log&quot;"
+		DisplayName   = "Log File"
+	/>
+	
+	<MBeanAttribute
+		Name        = "Enabled"
+		Type        = "java.lang.Boolean"
+		Default     = "false"
+	/>
+	
+	<MBeanAttribute
+		Name        = "LogSizeLimit"
+		DisplayName = "Log Size Limit (Kb)"
+		Type        = "java.lang.Integer"
+		Default     = "1024000"
+	/>
+	
+ 	<MBeanAttribute
+		Name        = "MaxNumberLogFiles"
+		DisplayName = "Max. Number Retained Files"
+		Type        = "java.lang.Integer"
+		Default     = "10"
+	/>
+
+</MBeanType>

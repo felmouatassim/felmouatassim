@@ -1,0 +1,107 @@
+<project name="CustomAuditProvider" default="createCustomProvider" basedir=".">
+    <description>Custom Audit Provider Build</description>
+	
+  	<!-- set global properties for this build according to your projects definition -->
+	<property name="bea.home" location="F:\Middleware" />
+	<property name="wls.lib.dir" value="wlserver_10.3/server/lib" />
+	<property name="jrockit.home" location="F:\Middleware\Java\jdk1.6.0_45" />
+	<!-- source, build and bin folders, those should be good enough -->
+  	<property name="src" location="src"/>
+  	<property name="build" location="build"/>
+	<property name="bin" location="bin"/>
+	<!-- This is the package name, in your eclipse project -->
+	<property name="package.name"  value="sample/examples/audit/providers"/>
+	<!-- Those are the Implementation class, The MBean definition XML (included in this project) -->
+	<property name="impl.class.name"  value="SimpleSampleAuditorImpl.java"/>
+	<property name="mbean.xml.file" value="SimpleSampleAuditor.xml" />
+	<!-- This is the resulting jar file which will be deployed to WLS -->	
+	<property name="jar.file.name" value="SimpleSampleAuditor.jar" />	
+	<!-- don't change this one -->
+	<property name="target.namespace" value="http://xmlns.oracle.com/oracleas/schema/11/adf/sampleapp/weblogic/providers" />
+	
+	<!-- This is the main target, run all the targets required to create the Provider -->
+	<!-- ORDER: clean, init, prepareCopy, genMBean, compile, distribute -->
+	<target name="createCustomProvider" description="run all the required tasks to build the Custom Audit Provider" 
+			depends="clean, init, genMBeanJar, compile, distribute" />	
+	
+	<!-- Delete the ${build} and ${bin} directory trees for a clean build -->
+	<target name="clean" description="clean up the build folders" >	    
+	    <delete dir="${build}"/>
+		<delete includeemptydirs="true">
+			<fileset dir="${bin}" includes="**/*/**" />
+		</delete>
+	</target>		
+
+	<!-- Create the build directory structure used by the genMBean task -->
+  	<target name="init">    	
+    	<mkdir dir="${build}"/>
+  		<mkdir dir="${build}/providersjar"/>
+  		<mkdir dir="${build}/created_files"/>
+  	</target>
+	
+	<!-- Copies the Auditor Impl source file to the created_files folder -->
+	<target name="prepareCopy">
+		<copy file="${src}/${package.name}/${impl.class.name}" todir="${build}/created_files"/>
+	</target>
+	
+	<!-- Sets the required classpath and runs the WebLogicMBeanMaker tool -->
+	<target name="genMBeanJar" depends="prepareCopy">
+	    <java classname="weblogic.management.commo.WebLogicMBeanMaker" fork="true" failonerror="true">
+	    	<classpath>
+	    		<pathelement path="${bea.home}/${wls.lib.dir}/weblogic.jar"/> 
+	    		<pathelement path="${jrockit.home}/lib/tools.jar"/> 
+	    	</classpath>	 
+	    	<jvmarg line="-DMJF=${build}/providersjar/${jar.file.name} 
+	    				  -DMDF=${src}/${package.name}/${mbean.xml.file} 
+	    		          -Dfiles=${build}/created_files 
+	    		          -DtargetNameSpace=${target.namespace}" 
+	    	/>
+	    </java>
+	</target>
+	
+	<!-- In order to use this task in Eclipse, go to Run -> External Tools -> External Tools Configuration. -->
+	<!-- In the dialog, choose the JRE tab, and select 'Run in the same JRE as the Workspace' -->
+	<target name="refreshWorkspace">
+		<eclipse.refreshLocal resource="./CustomAuditProvider" depth="infinite"/>
+	</target>
+	
+	<!-- Updates the MBean based on the mbean.xml.file -->
+	<!-- Use this task if you want to add/remove properties to your MBean and implement them in the ProviderImpl -->
+	<target name="updateMBean">
+	    <java classname="weblogic.management.commo.WebLogicMBeanMaker" fork="true" failonerror="true">
+	    	<classpath>
+	    		<pathelement path="${bea.home}/${wls.lib.dir}/weblogic.jar"/> 
+	    	</classpath>	 
+	    	<jvmarg line="-DMDF=${src}/${package.name}/${mbean.xml.file}	    		      
+	    		          -Dfiles=${src}
+	    		          -DtargetNameSpace=${target.namespace}" 
+	    	/>
+	    </java>
+		<antcall target="refreshWorkspace"/>
+	</target>	
+	
+	<!-- Compiles the Custom Provider Impl -->
+	<target name="compile">
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
+    	<classpath>
+    		<pathelement path="${build}\providersjar\${jar.file.name}"/>
+        	<pathelement path="${bea.home}/${wls.lib.dir}/weblogic.jar"/>
+    	</classpath>
+		</javac>
+	</target>
+
+	<!-- Updates the jar file with the Custom Auditor Impl class -->
+	<target name="distribute" description="updates the jar with all the required classes" >
+ 		<jar destfile="${build}\providersjar\${jar.file.name}"
+       		basedir="bin"
+       		includes="/${package.name}/**"
+ 			update="true"
+  		/>
+  	</target>
+	
+	<!-- copies the Provider jar to the mbeantypes folder, where WLS will load them at startup -->
+	<!-- The jar file must also to be on the server's classpath, modify the startWeblogic.sh script manually -->
+	<target name="deploy" description="copy the Provider jar to the WLS mbeantypes folder">		
+		<copy file="${build}\providersjar\${jar.file.name}" todir="${bea.home}/${wls.lib.dir}/mbeantypes"/>
+	</target>
+</project>
