@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/oracleas/schema/11/adf/sampleapp/weblogic/providers" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://xmlns.oracle.com/weblogic/security"/>
+  <xs:complexType name="simple-sample-auditorType">
+    <xs:complexContent>
+      <xs:extension base="sec:auditorType" xmlns:sec="http://xmlns.oracle.com/weblogic/security">
+        <xs:sequence>
+          <xs:element name="active-context-handler-entry" maxOccurs="unbounded" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="log-file-name" type="xs:string" minOccurs="0" nillable="true" default="SimpleSampleAuditor.log"/>
+          <xs:element name="enabled" type="xs:boolean" minOccurs="0" nillable="true"/>
+          <xs:element name="log-size-limit" type="xs:int" minOccurs="0" nillable="true"/>
+          <xs:element name="max-number-log-files" type="xs:int" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="simple-sample-auditor" type="prov:simple-sample-auditorType" xmlns:prov="http://xmlns.oracle.com/oracleas/schema/11/adf/sampleapp/weblogic/providers"/>
+</xs:schema>
