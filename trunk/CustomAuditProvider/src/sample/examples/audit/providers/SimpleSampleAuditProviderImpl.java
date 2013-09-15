@@ -138,79 +138,88 @@ public final class SimpleSampleAuditProviderImpl implements AuditProvider,
 	}
 
 	public void writeEvent(AuditEvent event) {
+		try {
+			if (enabled) {
+				// Tracer les authentifications
+				if (event.getEventType().contains("Authentication Audit Event")) {
+					try {
+						AuditAtnEvent createEvent = (AuditAtnEvent) event;
+						if (createEvent.getAtnEventType().toString()
+								.equals("AUTHENTICATE")) {
+							String user = createEvent.getUsername().toString();
+							String severity = createEvent.getSeverity()
+									.getSeverityString();
 
-		if (enabled) {
-			// Tracer les authentifications
-			if (event.getEventType().contains("Authentication Audit Event")) {
-				try{
-				AuditAtnEvent createEvent = (AuditAtnEvent) event;
-				if (createEvent.getAtnEventType().toString()
-						.equals("AUTHENTICATE")) {
-					String user = createEvent.getUsername().toString();
-					String severity = createEvent.getSeverity()
-							.getSeverityString();
-
-					logMessage("Authentication: User: " + user + ", severity: "
-							+ severity);
+							logMessage("Authentication: User: " + user
+									+ ", severity: " + severity);
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage()
+								+ e.getStackTrace().toString());
+					}
 				}
-				} catch (Exception e){
-					System.out.println(e.getMessage()+e.getStackTrace().toString());
-				}
+				// Tracer les authorisations
+				// else if (event.getEventType().contains(
+				// "Authorization Audit Event V2")) {
+				//
+				// logMessage("Authorisation : " + event.getClass());
+				// AuditAtzEvent createEvent = (AuditAtzEvent) event;
+				// String user = createEvent.getSubject().toString();
+				// String severity =
+				// createEvent.getSeverity().getSeverityString();
+				//
+				// logMessage("Authorization: User: " + user + ", Resource :"
+				// + createEvent.getResource() + ", severity: " + severity);
+				// }
+				// // Tracer les Creations de ressources
+				// else if (event instanceof AuditCreateConfigurationEvent) {
+				//
+				// AuditCreateConfigurationEvent createEvent =
+				// (AuditCreateConfigurationEvent) event;
+				//
+				// String user = createEvent.getSubject().toString();
+				// String obj = createEvent.getObjectName();
+				//
+				// logMessage("AuditCreateConfigurationEvent: User: " + user
+				// + ", Object: " + obj);
+				//
+				// }
+				// // Tracer les suppressions de ressources
+				// else if (event instanceof AuditDeleteConfigurationEvent) {
+				// AuditDeleteConfigurationEvent deleteEvent =
+				// (AuditDeleteConfigurationEvent) event;
+				//
+				// String user = deleteEvent.getSubject().toString();
+				// String obj = deleteEvent.getObjectName();
+				//
+				// logMessage("AuditDeleteConfigurationEvent: User: " + user
+				// + ", Object: " + obj);
+				//
+				// }
+				// // Tracer les modifications de ressources
+				// else if (event instanceof
+				// AuditSetAttributeConfigurationEvent) {
+				// AuditSetAttributeConfigurationEvent setEvent =
+				// (AuditSetAttributeConfigurationEvent) event;
+				//
+				// String oldValue = setEvent.getOldValue().toString();
+				// String newValue = setEvent.getNewValue().toString();
+				// String user = setEvent.getSubject().toString();
+				// String obj = setEvent.getObjectName();
+				//
+				// String attName = setEvent.getAttributeName();
+				//
+				// if (oldValue != null && newValue != null
+				// && !oldValue.equalsIgnoreCase(newValue)) {
+				// logMessage("AuditSetAttributeConfigurationEvent: User: "
+				// + user + ", Object: " + obj + ", Attribute: "
+				// + attName + ", Old Value: " + oldValue
+				// + ", New Value: " + newValue);
+				// }
+				// }
 			}
-			// Tracer les authorisations
-//			else if (event.getEventType().contains(
-//					"Authorization Audit Event V2")) {
-//
-//				logMessage("Authorisation : " + event.getClass());
-//				AuditAtzEvent createEvent = (AuditAtzEvent) event;
-//				String user = createEvent.getSubject().toString();
-//				String severity = createEvent.getSeverity().getSeverityString();
-//
-//				logMessage("Authorization: User: " + user + ", Resource :"
-//						+ createEvent.getResource() + ", severity: " + severity);
-//			}
-//			// Tracer les Creations de ressources
-//			else if (event instanceof AuditCreateConfigurationEvent) {
-//
-//				AuditCreateConfigurationEvent createEvent = (AuditCreateConfigurationEvent) event;
-//
-//				String user = createEvent.getSubject().toString();
-//				String obj = createEvent.getObjectName();
-//
-//				logMessage("AuditCreateConfigurationEvent: User: " + user
-//						+ ", Object: " + obj);
-//
-//			}
-//			// Tracer les suppressions de ressources
-//			else if (event instanceof AuditDeleteConfigurationEvent) {
-//				AuditDeleteConfigurationEvent deleteEvent = (AuditDeleteConfigurationEvent) event;
-//
-//				String user = deleteEvent.getSubject().toString();
-//				String obj = deleteEvent.getObjectName();
-//
-//				logMessage("AuditDeleteConfigurationEvent: User: " + user
-//						+ ", Object: " + obj);
-//
-//			}
-//			// Tracer les modifications de ressources
-//			else if (event instanceof AuditSetAttributeConfigurationEvent) {
-//				AuditSetAttributeConfigurationEvent setEvent = (AuditSetAttributeConfigurationEvent) event;
-//
-//				String oldValue = setEvent.getOldValue().toString();
-//				String newValue = setEvent.getNewValue().toString();
-//				String user = setEvent.getSubject().toString();
-//				String obj = setEvent.getObjectName();
-//
-//				String attName = setEvent.getAttributeName();
-//
-//				if (oldValue != null && newValue != null
-//						&& !oldValue.equalsIgnoreCase(newValue)) {
-//					logMessage("AuditSetAttributeConfigurationEvent: User: "
-//							+ user + ", Object: " + obj + ", Attribute: "
-//							+ attName + ", Old Value: " + oldValue
-//							+ ", New Value: " + newValue);
-//				}
-//			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 		return;
 	}
