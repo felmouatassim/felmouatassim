@@ -1,9 +1,12 @@
 package ma.farouk.jms;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.jms.JMSException;
 import javax.jms.Queue;
@@ -18,9 +21,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class SendToQueue {
-	public final static String JNDI_FACTORY = "weblogic.jndi.WLInitialContextFactory";
-	public final static String JMS_FACTORY = "iam.osb.jms.errors.cf";
-	public final static String QUEUE = "iam.osb.jms.errors.queue";
 	private QueueConnectionFactory qconFactory;
 	private QueueConnection qcon;
 	private QueueSession qsession;
@@ -28,8 +28,9 @@ public class SendToQueue {
 	private Queue queue;
 	private TextMessage msg;
 
-	public void init(Context ctx, String queueName) throws NamingException,
-			JMSException {
+	public void init(Context ctx, String queueName, String JMS_FACTORY) throws NamingException,
+			JMSException, IOException {
+		
 		qconFactory = (QueueConnectionFactory) ctx.lookup(JMS_FACTORY);
 		qcon = qconFactory.createQueueConnection();
 		qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -53,12 +54,20 @@ public class SendToQueue {
 	public static void main(String[] args) throws Exception {
 		if (args.length != 1) {
 			System.out
-					.println("Usage: java examples.jms.queue.QueueSend WebLogicURL");
+					.println("Usage: java WebLogicURL");
 			return;
 		}
-		InitialContext ic = getInitialContext(args[0]);
+		
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("JMSConfig.properties");
+		prop.load(input);
+		String JNDI_FACTORY = prop.getProperty("JNDI_FACTORY");
+		String JMS_FACTORY = prop.getProperty("JMS_FACTORY");
+		String QUEUE = prop.getProperty("QUEUE");
+		
+		InitialContext ic = getInitialContext(args[0], JNDI_FACTORY);
 		SendToQueue qs = new SendToQueue();
-		qs.init(ic, QUEUE);
+		qs.init(ic, QUEUE, JMS_FACTORY);
 		readAndSend(qs);
 		qs.close();
 	}
@@ -80,7 +89,7 @@ public class SendToQueue {
 		} while (!quitNow);
 	}
 
-	private static InitialContext getInitialContext(String url)
+	private static InitialContext getInitialContext(String url, String JNDI_FACTORY)
 			throws NamingException {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, JNDI_FACTORY);
