@@ -1,6 +1,9 @@
 package ma.farouk.jms;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -17,9 +20,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class ReceiveFromQueue implements MessageListener {
-	public final static String JNDI_FACTORY = "weblogic.jndi.WLInitialContextFactory";
-	public final static String JMS_FACTORY = "iam.osb.jms.errors.cf";
-	public final static String QUEUE = "iam.osb.jms.errors.queue";
 	private QueueConnectionFactory qconFactory;
 	private QueueConnection qcon;
 	private QueueSession qsession;
@@ -48,7 +48,7 @@ public class ReceiveFromQueue implements MessageListener {
 		}
 	}
 
-	public void init(Context ctx, String queueName) throws NamingException,
+	public void init(Context ctx, String queueName, String JMS_FACTORY) throws NamingException,
 			JMSException {
 		qconFactory = (QueueConnectionFactory) ctx.lookup(JMS_FACTORY);
 		qcon = qconFactory.createQueueConnection();
@@ -71,9 +71,17 @@ public class ReceiveFromQueue implements MessageListener {
 					.println("Usage: java examples.jms.queue.QueueReceive WebLogicURL");
 			return;
 		}
-		InitialContext ic = getInitialContext(args[0]);
+		
+		Properties prop = new Properties();
+		InputStream input = new FileInputStream("JMSConfig.properties");
+		prop.load(input);
+		String JNDI_FACTORY = prop.getProperty("JNDI_FACTORY");
+		String JMS_FACTORY = prop.getProperty("JMS_FACTORY");
+		String QUEUE = prop.getProperty("QUEUE");
+		
+		InitialContext ic = getInitialContext(args[0], JNDI_FACTORY);
 		ReceiveFromQueue qr = new ReceiveFromQueue();
-		qr.init(ic, QUEUE);
+		qr.init(ic, QUEUE, JMS_FACTORY);
 		System.out
 				.println("JMS Ready To Receive Messages (To quit, send a \"quit\" message).");
 		synchronized (qr) {
@@ -87,7 +95,7 @@ public class ReceiveFromQueue implements MessageListener {
 		qr.close();
 	}
 
-	private static InitialContext getInitialContext(String url)
+	private static InitialContext getInitialContext(String url, String JNDI_FACTORY)
 			throws NamingException {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 		env.put(Context.INITIAL_CONTEXT_FACTORY, JNDI_FACTORY);
