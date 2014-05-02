@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import javax.naming.InitialContext;
 
-public class SendToQueue {
+public class SendToSecureQueue {
 
 	public static void main(String[] args) {
 		Properties prop = new Properties();
@@ -18,8 +18,12 @@ public class SendToQueue {
 			String JMS_QUEUE_FACTORY = prop.getProperty("JMS_QUEUE_FACTORY");
 			String QUEUE = prop.getProperty("QUEUE");
 			String URL = prop.getProperty("URL");
-			InitialContext ic = JMSUtils.getInitialContext(URL, JNDI_FACTORY);
-			QueueProducer qm = new QueueProducer(ic, QUEUE, JMS_QUEUE_FACTORY);
+			String login = prop.getProperty("LOGIN");
+			String password = prop.getProperty("PASSWORD");
+			InitialContext ic = JMSUtils.getInitialContext(URL, JNDI_FACTORY, login,
+					password);
+			QueueProducer qm = new QueueProducer(ic, QUEUE, JMS_QUEUE_FACTORY,
+					login, password);
 			qm.init();
 			qm.readAndSend();
 			qm.close();
